@@ -1,9 +1,6 @@
 #cloud-config
 autoinstall:
   version: 1
-  early-commands:
-    - apt-get install -y flatpak
-    - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   locale: pt_BR.UTF-8
   keyboard:
     layout: br
@@ -29,6 +26,8 @@ autoinstall:
     - containerd.io
     - openjdk-17-jdk
   late-commands:
+    - apt-get install -y flatpak
+    - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     - flatpak install flathub com.brave.Browser -y
     - flatpak install flathub com.google.Chrome -y
     - flatpak install flathub com.visualstudio.code -y
