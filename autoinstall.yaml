@@ -12,7 +12,7 @@ autoinstall:
   identity:
     hostname: renehw
     username: rene
-    password: Bsoft
+    password: 43e3da3f1823163f9cb12346abef7bef6e81f4e3c49761c7cde6c2ab2c5774647ae7fe252d11663f0101cf7b837ce99bf44ed00a269910180b223ba4e448b471
   late-commands:
     - snap install android-studio --classic
     - snap install flutter --classic
