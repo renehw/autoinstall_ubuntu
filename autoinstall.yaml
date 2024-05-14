@@ -1,0 +1,59 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    - echo 'deb [arch=amd64] https://repo.brave.com/apt stable main' > /etc/apt/sources.list.d/brave-browser-release.list
+    - curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    - echo 'deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google-chrome.list
+    - curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+    - echo 'deb [arch=amd64] https://packages.microsoft.com/repos/code stable main' > /etc/apt/sources.list.d/vscode.list
+    - curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+  locale: pt_BR.UTF-8
+  keyboard:
+    layout: br
+    variant: abnt2
+  network:
+    network:
+      version: 2
+      ethernets:
+        eth0:
+          dhcp4: true
+  storage:
+    layout:
+      name: lvm
+  identity:
+    hostname: renehw
+    username: rene
+    password: Bsoft
+  packages:
+    - brave-browser
+    - google-chrome-stable
+    - code
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - openjdk-17-jdk
+    - dbeaver-ce
+  late-commands:
+    - snap install android-studio --classic
+    - snap install flutter --classic
+    - snap install postman
+  user-data:
+    users:
+      - name: rene
+        sudo: ALL=(ALL:ALL) ALL
+        shell: /bin/bash
+        groups: sudo, docker
+    ssh_pwauth: yes
+    disable_root: false
+  write_files:
+    - path: /etc/sudoers.d/rene-docker
+      content: 'rene ALL=(ALL) NOPASSWD: /usr/bin/docker'
+      permissions: '0440'
+
+  ssh:
+    allow-pw: true
+    install-server: true
+  package_update: true
+  package_upgrade: true
+  package_reboot_if_required: true
